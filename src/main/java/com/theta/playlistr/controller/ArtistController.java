@@ -1,5 +1,6 @@
 package com.theta.playlistr.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.theta.playlistr.domain.Artist;
 import com.theta.playlistr.knowledge.service.ArtistKnowledgeService;
 import org.slf4j.Logger;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ArtistController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private ArtistKnowledgeService artistKnowledgeService;
 
     public ArtistController(ArtistKnowledgeService artistKnowledgeService) {
@@ -22,6 +21,10 @@ public class ArtistController {
     @GetMapping("artist/{artistName}")
     public Artist getArtistByName(@PathVariable("artistName") String artistName) {
 
-        return this.artistKnowledgeService.findByName(artistName);
+        try {
+            return this.artistKnowledgeService.findByName(artistName);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
