@@ -1,5 +1,6 @@
 package com.theta.playlistr.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -13,6 +14,7 @@ abstract public class AbstractDomainObject<T> {
     @GeneratedValue
     private long id;
 
+    @JsonIgnore
     abstract public T getThis();
 
     public long getId() {

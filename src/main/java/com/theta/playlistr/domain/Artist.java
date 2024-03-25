@@ -1,5 +1,6 @@
 package com.theta.playlistr.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 
 @Entity
