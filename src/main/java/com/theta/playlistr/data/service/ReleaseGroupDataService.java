@@ -1,4 +1,4 @@
 package com.theta.playlistr.data.service;
 
-public interface ReleaseListDataService {
+public interface ReleaseGroupDataService {
 }
