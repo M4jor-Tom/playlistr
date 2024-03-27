@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ArtistKnowledgeServiceMusicbrainzImpl implements ArtistKnowledgeService {
 
@@ -23,17 +26,23 @@ public class ArtistKnowledgeServiceMusicbrainzImpl implements ArtistKnowledgeSer
     }
 
     @Override
-    public Artist findByName(String name) throws JsonProcessingException {
+    public Iterable<Artist> findByName(String name) throws JsonProcessingException {
 
         String matchingArtistsString = new RestTemplate().getForObject(this.getQueryString(name), String.class);
 
         JsonNode matchingArtistsJson = new ObjectMapper().readTree(matchingArtistsString);
-        String foundName = matchingArtistsJson
-            .get("artists")
-            .get(0)
-            .get("name")
-            .asText();
 
-        return new Artist().name(foundName);
+        List<Artist> result = new ArrayList<Artist>();
+
+        for(JsonNode artistNode: matchingArtistsJson.get("artists")) {
+
+            String foundName = artistNode
+                .get("name")
+                .asText();
+
+            result.add(new Artist().name(foundName));
+        }
+
+        return result;
     }
 }

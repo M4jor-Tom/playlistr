@@ -19,7 +19,7 @@ public class ArtistController {
     }
 
     @GetMapping("artist/{artistName}")
-    public Artist getArtistByName(@PathVariable("artistName") String artistName) {
+    public Iterable<Artist> getArtistByName(@PathVariable("artistName") String artistName) {
 
         try {
             return this.artistKnowledgeService.findByName(artistName);

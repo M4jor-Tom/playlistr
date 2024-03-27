@@ -5,5 +5,5 @@ import com.theta.playlistr.domain.Artist;
 
 public interface ArtistKnowledgeService {
 
-    Artist findByName(String name) throws JsonProcessingException;
+    Iterable<Artist> findByName(String name) throws JsonProcessingException;
 }
