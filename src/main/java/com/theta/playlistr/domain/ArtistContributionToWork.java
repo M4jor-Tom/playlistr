@@ -2,8 +2,11 @@ package com.theta.playlistr.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"author_id", "work_id"}))
 public class ArtistContributionToWork extends AbstractDomainObject<ArtistContributionToWork> {
 
     @ManyToOne
