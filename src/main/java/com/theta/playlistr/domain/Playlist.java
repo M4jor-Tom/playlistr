@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 public class Playlist extends AbstractNamedDomainObject<Playlist> {
 
     @Override
-    public Playlist getThis() {
+    protected Playlist getThis() {
         return this;
     }
 }

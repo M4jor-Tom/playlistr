@@ -14,8 +14,7 @@ abstract public class AbstractDomainObject<T> {
     @GeneratedValue
     private long id;
 
-    @JsonIgnore
-    abstract public T getThis();
+    abstract protected T getThis();
 
     public long getId() {
         return id;
