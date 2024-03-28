@@ -2,10 +2,13 @@ package com.theta.playlistr.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 import java.util.Set;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Artist extends AbstractNamedDomainObject<Artist> {
 
     @OneToMany

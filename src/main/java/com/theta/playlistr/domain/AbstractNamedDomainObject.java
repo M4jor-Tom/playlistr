@@ -8,7 +8,6 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 abstract public class AbstractNamedDomainObject<T> extends AbstractDomainObject<T> {
 
-    @Column(unique = true)
     private String name;
 
     public String getName() {
