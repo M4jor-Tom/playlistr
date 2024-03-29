@@ -2,6 +2,7 @@ package com.theta.playlistr.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.theta.playlistr.domain.Work;
+import com.theta.playlistr.knowledge.service.ArtistKnowledgeService;
 import com.theta.playlistr.knowledge.service.WorkKnowledgeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,10 @@ public class WorkController {
 
     private WorkKnowledgeService workKnowledgeService;
 
-    public WorkController(WorkKnowledgeService workKnowledgeService) {
+    private ArtistKnowledgeService artistKnowledgeService;
+
+
+    public WorkController(WorkKnowledgeService workKnowledgeService, ArtistKnowledgeService artistKnowledgeService) {
 
         this.workKnowledgeService = workKnowledgeService;
     }

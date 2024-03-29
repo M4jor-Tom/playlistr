@@ -1,5 +1,6 @@
 package com.theta.playlistr.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -10,9 +11,11 @@ import jakarta.persistence.UniqueConstraint;
 public class ArtistContributionToWork extends AbstractDomainObject<ArtistContributionToWork> {
 
     @ManyToOne
+    @JsonIgnoreProperties("artistContributionToWorks")
     private Artist author;
 
     @ManyToOne
+    @JsonIgnoreProperties("artistContributionToWorks")
     private Work work;
 
     @Override

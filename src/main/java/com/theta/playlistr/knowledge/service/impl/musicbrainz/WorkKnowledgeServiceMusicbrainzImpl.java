@@ -3,16 +3,22 @@ package com.theta.playlistr.knowledge.service.impl.musicbrainz;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.theta.playlistr.domain.Artist;
+import com.theta.playlistr.domain.ArtistContributionToWork;
 import com.theta.playlistr.domain.Work;
 import com.theta.playlistr.knowledge.service.WorkKnowledgeService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class WorkKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServiceMusicbrainzImpl implements WorkKnowledgeService {
+
+    private static final int WORK_SEARCH_LIMIT = 5;
 
     @Override
     protected String getMusicBrainzEntityName() {
@@ -28,13 +34,43 @@ public class WorkKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServic
 
         List<Work> result = new ArrayList<Work>();
 
-        for(JsonNode artistNode: matchingArtistsJson.get("works")) {
+        int index = 0;
+        for(JsonNode workNode: matchingArtistsJson.get("works")) {
+
+            if(index++ < WORK_SEARCH_LIMIT) {
+
+                String foundName = workNode
+                        .get("title")
+                        .asText();
+
+                String mbid = workNode
+                        .get("id")
+                        .asText();
+
+                result.add(new Work()
+                        .name(foundName)
+                        .artistContributionToWorks(this.findArtistContributionToWorkByWorkMbid(mbid)));
+            }
+        }
+
+        return result;
+    }
+
+    private Set<ArtistContributionToWork> findArtistContributionToWorkByWorkMbid(String workMbid) throws JsonProcessingException {
+
+        String matchingArtistsString = new RestTemplate().getForObject(this.getRelationStringWith("artist", workMbid), String.class);
+
+        JsonNode matchingArtistsJson = new ObjectMapper().readTree(matchingArtistsString);
+
+        Set<ArtistContributionToWork> result = new HashSet<ArtistContributionToWork>();
+
+        for(JsonNode artistNode: matchingArtistsJson.get("artists")) {
 
             String foundName = artistNode
-                    .get("title")
+                    .get("name")
                     .asText();
 
-            result.add(new Work().name(foundName));
+            result.add(new ArtistContributionToWork().author(new Artist().name(foundName)));
         }
 
         return result;
