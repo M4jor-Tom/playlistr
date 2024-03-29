@@ -18,7 +18,7 @@ import java.util.Set;
 @Service
 public class WorkKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServiceMusicbrainzImpl implements WorkKnowledgeService {
 
-    private static final int WORK_SEARCH_LIMIT = 5;
+    private static final int WORKS_SEARCH_LIMIT = 5;
 
     @Override
     protected String getMusicBrainzEntityName() {
@@ -37,7 +37,7 @@ public class WorkKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServic
         int index = 0;
         for(JsonNode workNode: matchingArtistsJson.get("works")) {
 
-            if(index++ < WORK_SEARCH_LIMIT) {
+            if(index++ < WORKS_SEARCH_LIMIT) {
 
                 String foundName = workNode
                         .get("title")
