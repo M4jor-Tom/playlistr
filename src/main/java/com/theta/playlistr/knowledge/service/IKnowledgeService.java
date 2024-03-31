@@ -4,5 +4,5 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface IKnowledgeService<T> {
 
-    Iterable<T> findByName(String name) throws JsonProcessingException;
+    Iterable<T> findByName(String name, int limit) throws JsonProcessingException;
 }

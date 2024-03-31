@@ -20,7 +20,6 @@ import java.util.Set;
 @Service
 public class ArtistKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServiceMusicbrainzImpl implements ArtistKnowledgeService {
 
-    private static final int ARTISTS_SEARCH_LIMIT = 5;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -29,7 +28,7 @@ public class ArtistKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServ
     }
 
     @Override
-    public Iterable<Artist> findByName(String name) throws JsonProcessingException {
+    public Iterable<Artist> findByName(String name, int limit) throws JsonProcessingException {
 
         String matchingArtistsString = new RestTemplate().getForObject(this.getQueryString(name), String.class);
 
@@ -40,7 +39,7 @@ public class ArtistKnowledgeServiceMusicbrainzImpl extends AbstractKnowledgeServ
         int index = 0;
         for(JsonNode artistNode: matchingArtistsJson.get("artists")) {
 
-            if(index++ < ARTISTS_SEARCH_LIMIT) {
+            if(index++ < limit) {
 
                 String foundName = artistNode
                         .get("name")

@@ -26,7 +26,7 @@ public class ReleaseListKnowledgeServiceMusicbrainzImpl extends AbstractKnowledg
     }
 
     @Override
-    public Iterable<ReleaseGroup> findByName(String name) throws JsonProcessingException {
+    public Iterable<ReleaseGroup> findByName(String name, int limit) throws JsonProcessingException {
 
         String matchingArtistsString = new RestTemplate().getForObject(this.getQueryString(name), String.class);
 

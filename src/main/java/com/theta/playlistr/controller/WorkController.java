@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WorkController {
 
+    private static final int WORKS_SEARCH_LIMIT = 5;
+
     private WorkKnowledgeService workKnowledgeService;
 
     private ArtistKnowledgeService artistKnowledgeService;
@@ -25,7 +27,7 @@ public class WorkController {
     public Iterable<Work> getArtistByName(@PathVariable("workName") String workName) {
 
         try {
-            return this.workKnowledgeService.findByName(workName);
+            return this.workKnowledgeService.findByName(workName, WORKS_SEARCH_LIMIT);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
