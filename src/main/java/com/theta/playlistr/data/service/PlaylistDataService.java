@@ -1,4 +1,6 @@
 package com.theta.playlistr.data.service;
 
-public interface PlaylistDataService {
+import com.theta.playlistr.domain.Playlist;
+
+public interface PlaylistDataService extends IDataService<Playlist> {
 }
