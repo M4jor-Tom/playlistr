@@ -2,7 +2,9 @@ package com.theta.playlistr.knowledge.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.List;
+
 public interface IKnowledgeService<T> {
 
-    Iterable<T> findByName(String name, int limit) throws JsonProcessingException;
+    List<T> findByName(String name, int limit) throws JsonProcessingException;
 }

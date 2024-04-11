@@ -7,9 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PlaylistDataServiceImpl extends AbstractDataServiceImpl<Playlist> implements PlaylistDataService {
+public class PlaylistDataServiceImpl extends AbstractDataServiceImpl<PlaylistRepository, Playlist> implements PlaylistDataService {
 
     public PlaylistDataServiceImpl(PlaylistRepository repository) {
         super(repository);
+    }
+
+    @Override
+    public Playlist findByName(String name) {
+        return this.getRepository().findByName(name);
     }
 }

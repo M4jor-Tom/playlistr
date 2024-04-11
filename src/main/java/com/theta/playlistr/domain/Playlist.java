@@ -1,27 +1,40 @@
 package com.theta.playlistr.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@NamedEntityGraph(name = "Playlist.works",
+        attributeNodes = @NamedAttributeNode("works"))
 public class Playlist extends AbstractNamedDomainObject<Playlist> {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("artistContributionToWorks")
     private Set<Work> works;
 
     @OneToMany
+    @JsonIgnore
     private Set<ReleaseGroup> releaseGroups;
 
     @OneToMany
+    @JsonIgnore
     private Set<Artist> artists;
 
     @OneToMany
+    @JsonIgnore
     private Set<Playlist> playlists;
+
+    public Playlist() {
+        this.works = new HashSet<Work>();
+        this.releaseGroups = new HashSet<ReleaseGroup>();
+        this.artists = new HashSet<Artist>();
+        this.playlists = new HashSet<Playlist>();
+    }
 
     @Override
     protected Playlist getThis() {

@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-abstract public class AbstractDataServiceImpl<T> {
+abstract public class AbstractDataServiceImpl<R extends JpaRepository<T, Long>, T> {
 
-    private final JpaRepository<T, Long> repository;
+    private final R repository;
 
-    public AbstractDataServiceImpl(JpaRepository<T, Long> repository) {
+    public AbstractDataServiceImpl(R repository) {
 
         this.repository = repository;
     }
@@ -37,7 +37,7 @@ abstract public class AbstractDataServiceImpl<T> {
         this.repository.deleteById(id);
     }
 
-    protected JpaRepository<T, Long> getRepository() {
+    protected R getRepository() {
         return repository;
     }
 }

@@ -1,10 +1,7 @@
 package com.theta.playlistr.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
@@ -12,7 +9,7 @@ import java.util.Set;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Artist extends AbstractNamedDomainObject<Artist> {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("author")
     private Set<ArtistContributionToWork> artistContributionToWorks;
 
