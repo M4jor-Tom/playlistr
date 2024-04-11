@@ -11,6 +11,10 @@ public class PlaylistController {
 
     private PlaylistDataService playlistDataService;
 
+    public PlaylistController(PlaylistDataService playlistDataService) {
+        this.playlistDataService = playlistDataService;
+    }
+
     @PostMapping("playlist/create/{playlistName}")
     public void createPlaylist(@PathVariable("playlistName") String playlistName) {
 
