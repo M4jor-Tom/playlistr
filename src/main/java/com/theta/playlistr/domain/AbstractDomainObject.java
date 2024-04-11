@@ -2,6 +2,7 @@ package com.theta.playlistr.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
 abstract public class AbstractDomainObject<T> {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     abstract protected T getThis();

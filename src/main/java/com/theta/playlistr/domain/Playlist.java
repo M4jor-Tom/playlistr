@@ -1,6 +1,7 @@
 package com.theta.playlistr.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -10,12 +11,16 @@ import java.util.Set;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Playlist extends AbstractNamedDomainObject<Playlist> {
 
+    @OneToMany
     private Set<Work> works;
 
+    @OneToMany
     private Set<ReleaseGroup> releaseGroups;
 
+    @OneToMany
     private Set<Artist> artists;
 
+    @OneToMany
     private Set<Playlist> playlists;
 
     @Override
