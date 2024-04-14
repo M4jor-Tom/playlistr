@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.theta.playlistr.data.service.ArtistDataService;
 import com.theta.playlistr.data.service.PlaylistDataService;
 import com.theta.playlistr.data.service.WorkDataService;
+import com.theta.playlistr.domain.Artist;
 import com.theta.playlistr.domain.ArtistContributionToWork;
 import com.theta.playlistr.domain.Playlist;
 import com.theta.playlistr.domain.Work;
@@ -53,20 +54,39 @@ public class PlaylistController {
 
         Playlist playlist = this.playlistDataService.findByName(playlistName);
 
+        if(playlist == null) {
+
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Playlist '" + playlistName + "' not found in database"
+            );
+        }
+
         try {
 
             // Find work with provider
-            Work work = this.workKnowledgeService.findByName(workName, resultNumber + 1).get(resultNumber);
-            for(ArtistContributionToWork contribution: work.getArtistContributionToWorks()) {
+            Work workFromKnowledge = this.workKnowledgeService.findByName(workName, resultNumber + 1).get(resultNumber);
 
-                // If artist does not exist
-                // Save it
-                this.artistDataService.save(contribution.getAuthor());
+            for(ArtistContributionToWork contributionFromKnowledge: workFromKnowledge.getArtistContributionToWorks()) {
+
+                Artist alreadyExistingAuthorFromDatabase = this.artistDataService.findByName(contributionFromKnowledge.getAuthor().getName());
+                Artist author = null;
+
+                if(alreadyExistingAuthorFromDatabase == null) {
+
+                    // If artist does not exist
+                    // Save it
+                    author = this.artistDataService.save(contributionFromKnowledge.getAuthor());
+
+                } else {
+
+                    author = alreadyExistingAuthorFromDatabase;
+                }
             }
 
             // Save work (cascade save on contribution)
-            this.workDataService.save(work);
-            playlist.addWork(work);
+            this.workDataService.save(workFromKnowledge);
+            playlist.addWork(workFromKnowledge);
 
         } catch (JsonProcessingException e) {
 

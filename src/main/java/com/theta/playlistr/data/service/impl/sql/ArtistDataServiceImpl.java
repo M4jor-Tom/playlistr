@@ -10,4 +10,9 @@ public class ArtistDataServiceImpl extends AbstractDataServiceImpl<ArtistReposit
     public ArtistDataServiceImpl(ArtistRepository repository) {
         super(repository);
     }
+
+    @Override
+    public Artist findByName(String name) {
+        return this.getRepository().findByName(name);
+    }
 }
