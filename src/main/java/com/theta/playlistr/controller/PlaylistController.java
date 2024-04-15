@@ -81,6 +81,7 @@ public class PlaylistController {
                 } else {
 
                     author = alreadyExistingAuthorFromDatabase;
+                    contributionFromKnowledge.author(author);
                 }
             }
 
